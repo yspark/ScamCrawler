@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException        
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait  # available since 2.4.0
 from selenium.webdriver.support import expected_conditions as EC  # available since 2.26.0
@@ -96,9 +97,12 @@ def outputTable(account, passwd):
  
     driver.get(siteLogsLink)
 
-    time.sleep(3)
+    #time.sleep(3)
 
-    tbodyList = driver.find_elements_by_xpath('//tbody')
+    try:
+      tbodyList = driver.find_elements_by_xpath('//tbody')
+    except NoSuchElementException:
+      continue
            
 
     if len(tbodyList) <= 1:
@@ -137,9 +141,13 @@ def outputTable(account, passwd):
     if contentLink:                    
       driver.get(contentLink.get_attribute('href'))
      
-      time.sleep(3)
+      #time.sleep(3)
  
-      textarea = driver.find_element_by_tag_name('textarea')
+      try:
+        textarea = driver.find_element_by_tag_name('textarea')
+      except NoSuchElementException:
+        continue
+
       outputText = appendField(outputText, repr(textarea.get_attribute('value')))      
     #endif
          
