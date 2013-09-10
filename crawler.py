@@ -17,6 +17,8 @@ from datetime import timedelta
 
 from pyvirtualdisplay import Display
 
+display = Display(visible=0, size=(1024, 768))
+display.start()
 
 
 accountList = []
@@ -167,9 +169,6 @@ def outputTable(account, passwd):
   
 ####################################################################
 
-display = Display(visible=0, size=(1024, 768))
-display.start()
-
 
 file = open('scamlog.csv', 'w')
 
@@ -182,7 +181,7 @@ loadAccount()
 file.write('"Account", "Passwd", "Serial", "PCNAME", "NOTE", "IP", "COUNTRY", "DATE", "TIME", "CONTENTS"\n')
 
 
-for i in range(len(accountList)):
+for i in range(74, len(accountList)):
   account = accountList[i]
   passwd = passwdList[i]
 
@@ -209,7 +208,7 @@ for i in range(len(accountList)):
   
   outputText = outputTable(account, passwd)
 
-  file.write(outputText)
+  file.write(outputText.encode('UTF-8'))
   
   # logout
   driver.quit()
