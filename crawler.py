@@ -84,7 +84,7 @@ def appendNewline(text):
 
 
 
-def outputTable(account, passwd):
+def outputTable(account, passwd, file):
 
   pageCount = 0 
   
@@ -97,6 +97,7 @@ def outputTable(account, passwd):
         
   while True:  
  
+    outputText = ''
     driver.get(siteLogsLink)
 
     #time.sleep(3)
@@ -156,6 +157,7 @@ def outputTable(account, passwd):
     # newline 
     outputText = appendNewline(outputText)
     
+    file.write(outputText.encode('UTF-8'))
     
     counter += 1
     validCounter += 1
@@ -181,7 +183,7 @@ loadAccount()
 file.write('"Account", "Passwd", "Serial", "PCNAME", "NOTE", "IP", "COUNTRY", "DATE", "TIME", "CONTENTS"\n')
 
 
-for i in range(74, len(accountList)):
+for i in range(273, len(accountList)):
   account = accountList[i]
   passwd = passwdList[i]
 
@@ -206,9 +208,9 @@ for i in range(74, len(accountList)):
   # check log
   driver.get(siteLogs)
   
-  outputText = outputTable(account, passwd)
+  outputTable(account, passwd, file)
 
-  file.write(outputText.encode('UTF-8'))
+  #file.write(outputText.encode('UTF-8'))
   
   # logout
   driver.quit()
