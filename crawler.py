@@ -200,7 +200,7 @@ loadAccount()
 file.write('"Account", "Passwd", "Serial", "PCNAME", "NOTE", "IP", "COUNTRY", "DATE", "TIME", "CONTENTS"\n')
 
 
-for i in range(635, len(accountList)):
+for i in range(3000, len(accountList)):
   #for i in range(535, 1000):
   account = accountList[i]
   passwd = passwdList[i]
