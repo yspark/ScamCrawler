@@ -188,20 +188,34 @@ def outputTable(account, passwd, file):
   
 ####################################################################
 
+loadAccount()
 
-file = open('scamlog.csv', 'w')
+
+if len(sys.argv) < 2:
+  print 'python crawler.py <start> <end>'
+  sys.exit()
+#endif
+
+start = int(sys.argv[1])
+
+if len(sys.argv) == 3:
+  end = int(sys.argv[2])
+else:
+  end = len(accountList)
+#endif
+
+filename = 'scamlog_'+sys.argv[1]+'_'+sys.argv[2]+'.csv'
+file = open(filename, 'w')
 
 siteMain = 'http://privaterecovery.net/br/Login.php'
 siteLogs = 'http://privaterecovery.net/br/Check_Logs.php'
 
 
-loadAccount()
 
 file.write('"Account", "Passwd", "Serial", "PCNAME", "NOTE", "IP", "COUNTRY", "DATE", "TIME", "CONTENTS"\n')
 
 
-for i in range(635, len(accountList)):
-  #for i in range(535, 1000):
+for i in range(start, end):
   account = accountList[i]
   passwd = passwdList[i]
 
