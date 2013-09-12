@@ -98,7 +98,11 @@ def outputTable(account, passwd, file):
   while True:  
  
     outputText = ''
-    driver.get(siteLogsLink)
+    try:
+      driver.get(siteLogsLink)
+    except:
+      time.sleep(3)
+      continue
 
     #time.sleep(3)
 
@@ -130,7 +134,10 @@ def outputTable(account, passwd, file):
     #endif
     
     # extract td
-    tds = tbody.find_elements_by_tag_name('td')    
+    try:
+      tds = tbody.find_elements_by_tag_name('td')    
+    except:
+      continue
 
     outputText = appendField(outputText, account)
     outputText = appendField(outputText, passwd)
@@ -140,9 +147,16 @@ def outputTable(account, passwd, file):
     #endfor
       
     # get contents
-    contentLink = tbody.find_element_by_tag_name('a')
+    try:
+      contentLink = tbody.find_element_by_tag_name('a')
+    except:
+      continue
+
     if contentLink:                    
-      driver.get(contentLink.get_attribute('href'))
+      try:
+        driver.get(contentLink.get_attribute('href'))
+      except:
+        continue
      
       #time.sleep(3)
  
@@ -151,7 +165,10 @@ def outputTable(account, passwd, file):
       except NoSuchElementException:
         continue
 
-      outputText = appendField(outputText, repr(textarea.get_attribute('value')))      
+      try:
+        outputText = appendField(outputText, repr(textarea.get_attribute('value')))      
+      except:
+        continue
     #endif
          
     # newline 
@@ -183,7 +200,8 @@ loadAccount()
 file.write('"Account", "Passwd", "Serial", "PCNAME", "NOTE", "IP", "COUNTRY", "DATE", "TIME", "CONTENTS"\n')
 
 
-for i in range(273, len(accountList)):
+for i in range(635, len(accountList)):
+  #for i in range(535, 1000):
   account = accountList[i]
   passwd = passwdList[i]
 
@@ -206,7 +224,7 @@ for i in range(273, len(accountList)):
   
   
   # check log
-  driver.get(siteLogs)
+  #driver.get(siteLogs)
   
   outputTable(account, passwd, file)
 
