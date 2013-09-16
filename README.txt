@@ -1,1 +1,1 @@
-nohup python Crawler.py
+nohup python Crawler.py start end &
